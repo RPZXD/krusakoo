@@ -4,6 +4,8 @@
  */
 
 // Site Configuration
+define('SITE_NAME', 'ห้องเรียนครูจิรัฐิติกาล พูลจ่าง');
+define('SITE_DESCRIPTION', 'กลุ่มสาระสังคมศึกษา ศาสนาและวัฒนธรรม โรงเรียนพิชัย');
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
 $host = $_SERVER['HTTP_HOST'];
 $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
