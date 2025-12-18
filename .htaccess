@@ -1,4 +1,5 @@
 RewriteEngine On
+RewriteBase /krusakoo/
 
 # If the request is not for a real file or directory
 RewriteCond %{REQUEST_FILENAME} !-f

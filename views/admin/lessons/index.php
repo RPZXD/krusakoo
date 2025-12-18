@@ -13,7 +13,11 @@
                     </h1>
                     <p class="text-blue-200 mt-1"><?= $subjectInfo['unit'] ?? '' ?></p>
                 </div>
-                <div class="flex gap-3">
+                <div class="flex gap-3 flex-wrap">
+                    <a href="<?= SITE_URL ?>" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all flex items-center gap-2">
+                        <i class="fas fa-home"></i>
+                        หน้าแรก
+                    </a>
                     <a href="<?= SITE_URL ?>/lessons.php" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all flex items-center gap-2">
                         <i class="fas fa-eye"></i>
                         ดูหน้าบทเรียน
@@ -22,6 +26,10 @@
                         <i class="fas fa-plus"></i>
                         เพิ่มบทเรียน
                     </button>
+                    <a href="<?= SITE_URL ?>/logout.php" class="px-4 py-2 bg-red-500/20 hover:bg-red-500/40 text-red-300 rounded-lg transition-all flex items-center gap-2">
+                        <i class="fas fa-sign-out-alt"></i>
+                        ออกจากระบบ
+                    </a>
                 </div>
             </div>
         </div>
@@ -189,21 +197,15 @@
                         </label>
                     </div>
                     
-                    <!-- Topics -->
+                    <!-- Topics with Per-Topic Content -->
                     <div class="md:col-span-2">
-                        <label class="block text-blue-200 text-sm mb-2">หัวข้อเนื้อหา</label>
-                        <div id="topicsContainer" class="space-y-2 mb-3">
+                        <label class="block text-blue-200 text-sm mb-2">หัวข้อเนื้อหา (คลิกเพื่อแก้ไขเนื้อหาแต่ละหัวข้อ)</label>
+                        <div id="topicsContainer" class="space-y-3 mb-3">
                             <!-- Topics will be added here -->
                         </div>
                         <button type="button" onclick="addTopic()" class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/40 text-blue-300 rounded-lg transition-all text-sm">
                             <i class="fas fa-plus mr-2"></i>เพิ่มหัวข้อ
                         </button>
-                    </div>
-                    
-                    <!-- Content -->
-                    <div class="md:col-span-2">
-                        <label class="block text-blue-200 text-sm mb-2">เนื้อหา (HTML)</label>
-                        <textarea id="content" rows="6" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-blue-300/50 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all resize-none font-mono text-sm" placeholder="<h3>หัวข้อ</h3><p>เนื้อหา...</p>"></textarea>
                     </div>
                 </div>
             </form>
@@ -223,6 +225,133 @@
 
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- jQuery (required for Summernote) -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Bootstrap (required for Summernote) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Summernote CSS/JS -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.js"></script>
+
+<style>
+/* Dark theme for Summernote */
+.note-editor.note-frame {
+    border-color: rgba(255,255,255,0.2) !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+.note-editor .note-toolbar {
+    background: rgba(30, 41, 59, 0.9) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+.note-editor .note-editing-area {
+    background: rgba(30, 41, 59, 0.5) !important;
+}
+.note-editor .note-editable {
+    background: transparent !important;
+    color: #e2e8f0 !important;
+    font-family: 'Kanit', sans-serif !important;
+}
+.note-editor .note-statusbar {
+    background: rgba(30, 41, 59, 0.9) !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+}
+.note-btn {
+    background-color: rgba(255,255,255,0.1) !important;
+    border-color: rgba(255,255,255,0.2) !important;
+    color: #e2e8f0 !important;
+}
+.note-btn:hover {
+    background-color: rgba(255,255,255,0.2) !important;
+}
+.note-current-fontname, .note-recent-color {
+    color: #e2e8f0 !important;
+}
+.dropdown-menu {
+    background: #1e293b !important;
+    border-color: rgba(255,255,255,0.2) !important;
+}
+.dropdown-item {
+    color: #e2e8f0 !important;
+}
+.dropdown-item:hover {
+    background: rgba(255,255,255,0.1) !important;
+}
+/* Fix z-index for Summernote dropdowns and modals */
+.note-popover {
+    z-index: 9999 !important;
+}
+.note-modal {
+    z-index: 10050 !important;
+}
+.note-modal-backdrop {
+    z-index: 10040 !important;
+}
+.dropdown-menu.show {
+    z-index: 9999 !important;
+}
+.note-editor .dropdown-menu {
+    z-index: 9999 !important;
+    position: absolute !important;
+}
+</style>
+
+<script>
+// Fix: Prevent modal backdrop from capturing focus/clicks, allowing Summernote dropdowns to work
+$(document).on('click', '.note-btn-group .dropdown-toggle, .note-btn-group .dropdown-menu', function(e) {
+    e.stopPropagation();
+});
+
+// Fix Bootstrap modal focus trap blocking Summernote
+$(document).on('focusin', function(e) {
+    if ($(e.target).closest('.note-editable, .note-toolbar, .note-modal, .note-popover').length) {
+        e.stopImmediatePropagation();
+    }
+});
+
+// Initialize Summernote when document is ready
+$(document).ready(function() {
+    $('#content').summernote({
+        height: 350,
+        placeholder: 'พิมพ์เนื้อหาบทเรียนที่นี่...',
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        fontNames: ['Kanit', 'Arial', 'Helvetica', 'Times New Roman', 'Courier New'],
+        callbacks: {
+            onChange: function(contents) {
+                // Auto-save to hidden textarea
+                $('#content').val(contents);
+            }
+        }
+    });
+});
+
+// Helper functions to get/set Summernote content
+function getSummernoteContent() {
+    return $('#content').summernote('code');
+}
+
+function setSummernoteContent(content) {
+    $('#content').summernote('code', content || '');
+}
+
+function resetSummernote() {
+    $('#content').summernote('reset');
+}
+</script>
 
 <script>
 const API_URL = '<?= SITE_URL ?>/api/lessons.php';
@@ -246,27 +375,126 @@ function resetForm() {
     document.getElementById('topicsContainer').innerHTML = '';
     document.getElementById('icon').value = '📚';
     document.getElementById('duration').value = '30 นาที';
-    addTopic(); // Add one empty topic
+    // Reset topic counter and add one empty topic
+    topicCounter = 0;
+    addTopic();
 }
 
-// Topics management
-function addTopic(value = '') {
+// Topics management with per-topic content
+let topicCounter = 0;
+
+function addTopic(topicData = null) {
     const container = document.getElementById('topicsContainer');
-    const index = container.children.length;
+    const index = topicCounter++;
+    const name = topicData?.name || '';
+    const content = topicData?.content || '';
+    
     const div = document.createElement('div');
-    div.className = 'flex gap-2';
+    div.className = 'topic-item bg-white/5 border border-white/10 rounded-xl overflow-hidden';
+    div.dataset.index = index;
     div.innerHTML = `
-        <input type="text" class="topic-input flex-1 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-blue-300/50 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" placeholder="หัวข้อที่ ${index + 1}" value="${value}">
-        <button type="button" onclick="this.parentElement.remove()" class="px-3 py-2 bg-red-500/20 hover:bg-red-500/40 text-red-300 rounded-lg transition-all">
-            <i class="fas fa-times"></i>
-        </button>
+        <div class="flex items-center gap-2 p-3">
+            <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold topic-number">${container.children.length + 1}</span>
+            <input type="text" class="topic-name flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-blue-300/50 focus:border-blue-500 outline-none text-sm" placeholder="ชื่อหัวข้อ" value="${escapeHtml(name)}">
+            <button type="button" onclick="toggleTopicContent(${index})" class="px-3 py-2 bg-purple-500/20 hover:bg-purple-500/40 text-purple-300 rounded-lg transition-all text-sm" title="แก้ไขเนื้อหา">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button type="button" onclick="removeTopic(${index})" class="px-3 py-2 bg-red-500/20 hover:bg-red-500/40 text-red-300 rounded-lg transition-all text-sm">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="topicContent_${index}" class="hidden p-3 pt-0">
+            <label class="block text-blue-200 text-xs mb-2">เนื้อหาหัวข้อนี้:</label>
+            <textarea id="topicEditor_${index}" class="topic-content w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-blue-300/50 focus:border-blue-500 outline-none text-sm font-mono min-h-[150px] resize-y" placeholder="<p>พิมพ์เนื้อหา HTML ที่นี่...</p>">${escapeHtml(content)}</textarea>
+        </div>
     `;
     container.appendChild(div);
+    updateTopicNumbers();
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function toggleTopicContent(index) {
+    const contentDiv = document.getElementById(`topicContent_${index}`);
+    if (contentDiv) {
+        const wasHidden = contentDiv.classList.contains('hidden');
+        contentDiv.classList.toggle('hidden');
+        
+        // Initialize Summernote when first opened
+        if (wasHidden) {
+            const editorId = `#topicEditor_${index}`;
+            if (!$(editorId).hasClass('summernote-initialized')) {
+                $(editorId).summernote({
+                    height: 250,
+                    placeholder: 'พิมพ์เนื้อหาหัวข้อนี้...',
+                    dialogsInBody: true,
+                    dialogsFade: true,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview']]
+                    ],
+                    callbacks: {
+                        onChange: function(contents) {
+                            $(editorId).val(contents);
+                        }
+                    }
+                });
+                $(editorId).addClass('summernote-initialized');
+            }
+        }
+    }
+}
+
+function removeTopic(index) {
+    const item = document.querySelector(`.topic-item[data-index="${index}"]`);
+    if (item) {
+        item.remove();
+        updateTopicNumbers();
+    }
+}
+
+function updateTopicNumbers() {
+    const items = document.querySelectorAll('.topic-item');
+    items.forEach((item, i) => {
+        const numberEl = item.querySelector('.topic-number');
+        if (numberEl) numberEl.textContent = i + 1;
+    });
 }
 
 function getTopics() {
-    const inputs = document.querySelectorAll('.topic-input');
-    return Array.from(inputs).map(input => input.value).filter(v => v.trim() !== '');
+    const items = document.querySelectorAll('.topic-item');
+    const topics = [];
+    items.forEach(item => {
+        const nameInput = item.querySelector('.topic-name');
+        const contentInput = item.querySelector('.topic-content');
+        if (nameInput && nameInput.value.trim()) {
+            // Get content from Summernote if initialized, otherwise from textarea
+            let content = '';
+            if (contentInput) {
+                const $editor = $(contentInput);
+                if ($editor.hasClass('summernote-initialized')) {
+                    content = $editor.summernote('code');
+                } else {
+                    content = contentInput.value;
+                }
+            }
+            topics.push({
+                name: nameInput.value.trim(),
+                content: content
+            });
+        }
+    });
+    return topics;
 }
 
 // CRUD operations
@@ -279,7 +507,6 @@ async function saveLesson() {
         difficulty: document.getElementById('difficulty').value,
         duration: document.getElementById('duration').value || '30 นาที',
         is_new: document.getElementById('isNew').checked,
-        content: document.getElementById('content').value,
         topics: getTopics()
     };
     
@@ -332,12 +559,19 @@ async function editLesson(id) {
             document.getElementById('difficulty').value = lesson.difficulty;
             document.getElementById('duration').value = lesson.duration;
             document.getElementById('isNew').checked = lesson.is_new;
-            document.getElementById('content').value = lesson.content || '';
             
-            // Load topics
+            // Load topics with per-topic content
             document.getElementById('topicsContainer').innerHTML = '';
+            topicCounter = 0;
             if (lesson.topics && lesson.topics.length > 0) {
-                lesson.topics.forEach(topic => addTopic(topic));
+                lesson.topics.forEach(topic => {
+                    // Handle both old format (string) and new format (object)
+                    if (typeof topic === 'string') {
+                        addTopic({ name: topic, content: '' });
+                    } else {
+                        addTopic(topic);
+                    }
+                });
             } else {
                 addTopic();
             }

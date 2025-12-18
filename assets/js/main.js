@@ -169,25 +169,27 @@ explosionStyle.textContent = `
 document.head.appendChild(explosionStyle);
 
 // ============================================
-// Click Effect anywhere
+// Click Effect anywhere (disabled on admin pages)
 // ============================================
-document.addEventListener('click', (e) => {
-    const clickEmoji = document.createElement('div');
-    clickEmoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    clickEmoji.style.cssText = `
-        position: fixed;
-        left: ${e.clientX}px;
-        top: ${e.clientY}px;
-        font-size: 2rem;
-        pointer-events: none;
-        z-index: 9999;
-        animation: clickFloat 1s ease-out forwards;
-        transform: translate(-50%, -50%);
-    `;
+if (!window.location.href.includes('admin')) {
+    document.addEventListener('click', (e) => {
+        const clickEmoji = document.createElement('div');
+        clickEmoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        clickEmoji.style.cssText = `
+            position: fixed;
+            left: ${e.clientX}px;
+            top: ${e.clientY}px;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 9999;
+            animation: clickFloat 1s ease-out forwards;
+            transform: translate(-50%, -50%);
+        `;
 
-    document.body.appendChild(clickEmoji);
-    setTimeout(() => clickEmoji.remove(), 1000);
-});
+        document.body.appendChild(clickEmoji);
+        setTimeout(() => clickEmoji.remove(), 1000);
+    });
+}
 
 // Add keyframes for click float
 const clickStyle = document.createElement('style');

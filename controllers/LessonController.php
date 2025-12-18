@@ -57,11 +57,21 @@ class LessonController {
         $lesson = $this->lessonModel->getById($lessonId);
         
         if (!$lesson || !isset($lesson['topics'][$topicIndex])) {
-            header('Location: ' . SITE_URL . '/lessons/' . $lessonId);
+            header('Location: ' . SITE_URL . '/lessons.php?id=' . $lessonId);
             exit;
         }
         
-        $topic = $lesson['topics'][$topicIndex];
+        // Handle both old format (string) and new format (object with name and content)
+        $topicData = $lesson['topics'][$topicIndex];
+        if (is_array($topicData)) {
+            $topic = $topicData['name'];
+            $topicContent = $topicData['content'] ?? '';
+        } else {
+            // Backward compatibility for old string format
+            $topic = $topicData;
+            $topicContent = $lesson['content'] ?? '';
+        }
+        
         $topicNumber = $topicIndex + 1;
         
         // หา topic ก่อนหน้าและถัดไป

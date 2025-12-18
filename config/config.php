@@ -20,6 +20,10 @@ define('TEACHER_PHONE', 'xxx-xxx-xxxx');
 define('SCHOOL_NAME', 'โรงเรียนพิชัย');
 define('DEPARTMENT', 'กลุ่มสาระสังคมศึกษา ศาสนาและวัฒนธรรม');
 
+// Admin Credentials
+define('ADMIN_USERNAME', 'admin');
+define('ADMIN_PASSWORD', 'krusakoo2024');
+
 // Path Configuration
 define('BASE_PATH', dirname(__DIR__));
 define('VIEWS_PATH', BASE_PATH . '/views');

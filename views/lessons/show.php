@@ -11,7 +11,7 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Breadcrumb -->
         <div class="mb-8">
-            <a href="<?= SITE_URL ?>/lessons" class="inline-flex items-center text-blue-300 hover:text-white transition-colors">
+            <a href="<?= SITE_URL ?>/lessons.php" class="inline-flex items-center text-blue-300 hover:text-white transition-colors">
                 <i class="fas fa-arrow-left mr-2"></i>
                 กลับไปหน้าบทเรียน
             </a>
@@ -79,15 +79,16 @@
                 <span class="mr-3">📋</span> เนื้อหาบทเรียน
             </h2>
             <div class="space-y-4">
-                <?php foreach ($lesson['topics'] as $index => $topic): ?>
-                <a href="<?= SITE_URL ?>/lessons/<?= $lesson['id'] ?>?topic=<?= $index ?>" 
+                <?php foreach ($lesson['topics'] as $index => $topicData): ?>
+                <?php $topicName = is_array($topicData) ? $topicData['name'] : $topicData; ?>
+                <a href="<?= SITE_URL ?>/lessons.php?id=<?= $lesson['id'] ?>&topic=<?= $index ?>" 
                    class="flex items-center p-4 glass-dark rounded-xl hover:bg-white/10 transition-colors cursor-pointer group">
                     <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-4">
                         <?= $index + 1 ?>
                     </div>
                     <div class="flex-1">
                         <p class="text-white font-medium group-hover:text-yellow-300 transition-colors">
-                            <?= $topic ?>
+                            <?= $topicName ?>
                         </p>
                     </div>
                     <i class="fas fa-play-circle text-2xl text-blue-400 group-hover:text-yellow-300 transition-colors"></i>

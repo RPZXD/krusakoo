@@ -10,6 +10,8 @@ require_once __DIR__ . '/config/config.php';
 // Load controllers
 require_once CONTROLLERS_PATH . '/HomeController.php';
 require_once CONTROLLERS_PATH . '/LessonController.php';
+require_once CONTROLLERS_PATH . '/AuthController.php';
+require_once CONTROLLERS_PATH . '/LessonAdminController.php';
 
 // Get the page parameter or parse from REQUEST_URI
 $page = $_GET['page'] ?? '';
@@ -17,7 +19,9 @@ $page = $_GET['page'] ?? '';
 // If no page parameter, try to parse from URL path
 if (empty($page)) {
     $requestUri = $_SERVER['REQUEST_URI'];
-    $basePath = '/krusakoo';
+    // Get the script directory dynamically
+    $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
+    $basePath = $scriptDir !== '/' ? $scriptDir : '';
     
     // Remove base path from URI
     $path = str_replace($basePath, '', $requestUri);
@@ -29,11 +33,13 @@ if (empty($page)) {
     
     $controller = $segments[0] ?? '';
     $action = $segments[1] ?? '';
+    $subAction = $segments[2] ?? '';
 } else {
     // Using query string routing: ?page=lessons or ?page=lessons&id=1
     $segments = explode('/', $page);
     $controller = $segments[0] ?? '';
     $action = $_GET['id'] ?? ($segments[1] ?? '');
+    $subAction = $segments[2] ?? '';
 }
 
 // Route the request
@@ -61,6 +67,34 @@ switch ($controller) {
             $lessonController->show($action);
         }
         break;
+    
+    case 'login':
+        $authController = new AuthController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $authController->login();
+        } else {
+            $authController->showLogin();
+        }
+        break;
+    
+    case 'logout':
+        $authController = new AuthController();
+        $authController->logout();
+        break;
+    
+    case 'admin':
+        $authController = new AuthController();
+        $authController->requireAuth();
+        
+        switch ($action) {
+            case '':
+            case 'lessons':
+            default:
+                $lessonAdminController = new LessonAdminController();
+                $lessonAdminController->index();
+                break;
+        }
+        break;
         
     default:
         // 404 - Page not found
@@ -71,3 +105,4 @@ switch ($controller) {
         echo '</body></html>';
         break;
 }
+
