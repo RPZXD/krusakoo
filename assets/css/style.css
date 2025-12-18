@@ -1,0 +1,385 @@
+/* ============================================
+   Base Styles
+   ============================================ */
+* {
+    font-family: 'Kanit', sans-serif;
+}
+
+/* ============================================
+   Gradient Backgrounds
+   ============================================ */
+.gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+}
+
+.gradient-social {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+}
+
+.gradient-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+}
+
+.gradient-lessons {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #312e81 100%);
+}
+
+/* ============================================
+   Glassmorphism
+   ============================================ */
+.glass {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+    background: rgba(30, 58, 138, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
+   Navigation Styles
+   ============================================ */
+.nav-link {
+    color: white;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.nav-link:hover {
+    color: #fbbf24;
+    transform: scale(1.05);
+}
+
+.nav-link.active {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.2);
+}
+
+/* ============================================
+   Emoji Effects
+   ============================================ */
+.emoji-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.falling-emoji {
+    position: absolute;
+    top: -50px;
+    animation: fall linear forwards;
+    font-size: 2rem;
+    opacity: 0.7;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.floating-emoji {
+    position: absolute;
+    font-size: 3rem;
+    animation: floatEmoji 6s ease-in-out infinite;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.floating-emoji:hover {
+    transform: scale(1.5) rotate(15deg);
+}
+
+@keyframes floatEmoji {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-15px) rotate(5deg); }
+    50% { transform: translateY(-25px) rotate(-5deg); }
+    75% { transform: translateY(-10px) rotate(3deg); }
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1e3a8a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+}
+
+/* ============================================
+   Background Shapes
+   ============================================ */
+.bg-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+}
+
+.shape-1 {
+    width: 400px;
+    height: 400px;
+    background: #60a5fa;
+    top: -100px;
+    right: -100px;
+    animation: morph 15s ease-in-out infinite;
+}
+
+.shape-2 {
+    width: 300px;
+    height: 300px;
+    background: #f093fb;
+    bottom: 10%;
+    left: -50px;
+    animation: morph 12s ease-in-out infinite reverse;
+}
+
+.shape-3 {
+    width: 200px;
+    height: 200px;
+    background: #fbbf24;
+    top: 50%;
+    right: 20%;
+    animation: morph 18s ease-in-out infinite;
+}
+
+@keyframes morph {
+    0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+    50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+    75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
+}
+
+/* ============================================
+   Card Effects
+   ============================================ */
+.card-hover {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-hover:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.lesson-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.lesson-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   Ripple Effect
+   ============================================ */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform 0.5s, opacity 1s;
+}
+
+.ripple:active::after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
+}
+
+/* ============================================
+   Glow Effect
+   ============================================ */
+.glow {
+    box-shadow: 0 0 20px rgba(96, 165, 250, 0.5),
+                0 0 40px rgba(96, 165, 250, 0.3),
+                0 0 60px rgba(96, 165, 250, 0.1);
+}
+
+.glow-hover:hover {
+    box-shadow: 0 0 30px rgba(96, 165, 250, 0.6),
+                0 0 60px rgba(96, 165, 250, 0.4),
+                0 0 90px rgba(96, 165, 250, 0.2);
+}
+
+/* ============================================
+   Text Effects
+   ============================================ */
+.text-gradient {
+    background: linear-gradient(135deg, #60a5fa 0%, #f093fb 50%, #fbbf24 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.typing-text {
+    border-right: 3px solid #60a5fa;
+    animation: blink 0.7s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { border-color: transparent; }
+    50% { border-color: #60a5fa; }
+}
+
+/* ============================================
+   Particle Background
+   ============================================ */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ============================================
+   Lesson Page Specific
+   ============================================ */
+.lesson-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    animation: pulse 2s infinite;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #60a5fa 0%, #a78bfa 100%);
+    height: 4px;
+    border-radius: 2px;
+    transition: width 0.5s ease;
+}
+
+.video-thumbnail {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.video-thumbnail::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.7) 100%);
+    z-index: 1;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.play-button:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    background: white;
+}
+
+/* ============================================
+   Difficulty Badges
+   ============================================ */
+.difficulty-easy {
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+}
+
+.difficulty-medium {
+    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+}
+
+.difficulty-hard {
+    background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+}
+
+/* ============================================
+   Subject Colors
+   ============================================ */
+.subject-geography { border-color: #3b82f6; }
+.subject-geography .subject-icon { background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%); }
+
+.subject-history { border-color: #f59e0b; }
+.subject-history .subject-icon { background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); }
+
+.subject-religion { border-color: #8b5cf6; }
+.subject-religion .subject-icon { background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%); }
+
+.subject-culture { border-color: #ec4899; }
+.subject-culture .subject-icon { background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%); }
+
+.subject-civics { border-color: #06b6d4; }
+.subject-civics .subject-icon { background: linear-gradient(135deg, #06b6d4 0%, #22d3d3 100%); }
+
+.subject-economics { border-color: #10b981; }
+.subject-economics .subject-icon { background: linear-gradient(135deg, #10b981 0%, #34d399 100%); }
