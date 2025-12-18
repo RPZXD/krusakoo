@@ -48,8 +48,12 @@ switch ($controller) {
         
     case 'lessons':
         $lessonController = new LessonController();
+        $topicId = $_GET['topic'] ?? null;
         
-        if (empty($action)) {
+        if (!empty($action) && $topicId !== null) {
+            // Show specific topic
+            $lessonController->showTopic($action, $topicId);
+        } else if (empty($action)) {
             // Show all lessons
             $lessonController->index();
         } else {

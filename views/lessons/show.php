@@ -80,7 +80,7 @@
             </h2>
             <div class="space-y-4">
                 <?php foreach ($lesson['topics'] as $index => $topic): ?>
-                <a href="<?= SITE_URL ?>/lessons.php?id=<?= $lesson['id'] ?>&topic=<?= $index ?>" 
+                <a href="<?= SITE_URL ?>/lessons/<?= $lesson['id'] ?>?topic=<?= $index ?>" 
                    class="flex items-center p-4 glass-dark rounded-xl hover:bg-white/10 transition-colors cursor-pointer group">
                     <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-4">
                         <?= $index + 1 ?>

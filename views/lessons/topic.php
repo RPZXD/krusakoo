@@ -11,11 +11,11 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Breadcrumb -->
         <div class="mb-8 flex flex-wrap gap-2">
-            <a href="<?= SITE_URL ?>/lessons.php" class="text-blue-300 hover:text-white transition-colors">
+            <a href="<?= SITE_URL ?>/lessons" class="text-blue-300 hover:text-white transition-colors">
                 บทเรียนออนไลน์
             </a>
             <span class="text-blue-400">/</span>
-            <a href="<?= SITE_URL ?>/lessons.php?id=<?= $lesson['id'] ?>" class="text-blue-300 hover:text-white transition-colors">
+            <a href="<?= SITE_URL ?>/lessons/<?= $lesson['id'] ?>" class="text-blue-300 hover:text-white transition-colors">
                 <?= $lesson['title'] ?>
             </a>
             <span class="text-blue-400">/</span>
@@ -63,7 +63,7 @@
         <!-- Navigation -->
         <div class="flex flex-col sm:flex-row justify-between gap-4">
             <?php if ($prevTopic !== null): ?>
-            <a href="<?= SITE_URL ?>/lessons.php?id=<?= $lesson['id'] ?>&topic=<?= $prevTopic ?>" 
+            <a href="<?= SITE_URL ?>/lessons/<?= $lesson['id'] ?>?topic=<?= $prevTopic ?>" 
                class="flex-1 glass-dark rounded-xl p-4 hover:bg-white/10 transition-colors group text-left">
                 <div class="flex items-center">
                     <i class="fas fa-arrow-left text-blue-400 group-hover:text-yellow-300 mr-3"></i>
@@ -79,14 +79,14 @@
             <div class="flex-1"></div>
             <?php endif; ?>
             
-            <a href="<?= SITE_URL ?>/lessons.php?id=<?= $lesson['id'] ?>" 
+            <a href="<?= SITE_URL ?>/lessons/<?= $lesson['id'] ?>" 
                class="glass-dark rounded-xl p-4 hover:bg-white/10 transition-colors group text-center px-8">
                 <i class="fas fa-list text-blue-400 group-hover:text-yellow-300 text-xl"></i>
                 <p class="text-white text-sm mt-1">ดูทั้งหมด</p>
             </a>
             
             <?php if ($nextTopic !== null): ?>
-            <a href="<?= SITE_URL ?>/lessons.php?id=<?= $lesson['id'] ?>&topic=<?= $nextTopic ?>" 
+            <a href="<?= SITE_URL ?>/lessons/<?= $lesson['id'] ?>?topic=<?= $nextTopic ?>" 
                class="flex-1 glass-dark rounded-xl p-4 hover:bg-white/10 transition-colors group text-right">
                 <div class="flex items-center justify-end">
                     <div>

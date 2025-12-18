@@ -6,7 +6,9 @@
 // Site Configuration
 define('SITE_NAME', 'ห้องเรียนครูจิรัฐิติกาล พูลจ่าง');
 define('SITE_DESCRIPTION', 'กลุ่มสาระสังคมศึกษา ศาสนาและวัฒนธรรม โรงเรียนพิชัย');
-define('SITE_URL', 'http://localhost/krusakoo');
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'];
+define('SITE_URL', $protocol . '://' . $host . '/krusakoo');
 
 // Teacher Info
 define('TEACHER_NAME', 'ครูจิรัฐิติกาล พูลจ่าง');

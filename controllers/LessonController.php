@@ -57,7 +57,7 @@ class LessonController {
         $lesson = $this->lessonModel->getById($lessonId);
         
         if (!$lesson || !isset($lesson['topics'][$topicIndex])) {
-            header('Location: ' . SITE_URL . '/lessons.php?id=' . $lessonId);
+            header('Location: ' . SITE_URL . '/lessons/' . $lessonId);
             exit;
         }
         
