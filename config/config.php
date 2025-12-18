@@ -4,11 +4,12 @@
  */
 
 // Site Configuration
-define('SITE_NAME', 'ห้องเรียนครูจิรัฐิติกาล พูลจ่าง');
-define('SITE_DESCRIPTION', 'กลุ่มสาระสังคมศึกษา ศาสนาและวัฒนธรรม โรงเรียนพิชัย');
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
 $host = $_SERVER['HTTP_HOST'];
-define('SITE_URL', $protocol . '://' . $host . '/krusakoo');
+$scriptDir = dirname($_SERVER['SCRIPT_NAME']);
+// Remove trailing slash if it exists (except for root)
+$path = rtrim($scriptDir, '/\\');
+define('SITE_URL', $protocol . '://' . $host . $path);
 
 // Teacher Info
 define('TEACHER_NAME', 'ครูจิรัฐิติกาล พูลจ่าง');
